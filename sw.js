@@ -3,7 +3,7 @@
  * Handles offline caching for the Dog Breeds PWA
  */
 
-const CACHE_NAME = 'dog-v1';
+const CACHE_NAME = 'dog-v2';
 
 // Resources to cache for offline use
 const STATIC_ASSETS = [

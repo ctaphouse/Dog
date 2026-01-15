@@ -2,7 +2,7 @@
   "name": "Dog Breeds Tracker",
   "short_name": "Dog Breeds",
   "description": "Track dog breeds and their associated groups",
-  "start_url": "/dog/",
+  "start_url": "/Dog/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#F2F2F7",
