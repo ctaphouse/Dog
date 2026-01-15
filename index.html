@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="description" content="Track dog breeds and their associated groups">
+
+  <!-- iOS PWA Meta Tags -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Dog Breeds">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Theme Color -->
+  <meta name="theme-color" content="#007AFF">
+
+  <title>Dog Breeds</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Header -->
+    <header class="app-header">
+      <button id="back-btn" class="header-btn" aria-label="Go back" hidden>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+      </button>
+      <h1 id="header-title">Groups</h1>
+      <button id="add-btn" class="header-btn" aria-label="Add new">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 5v14M5 12h14"/>
+        </svg>
+      </button>
+    </header>
+
+    <!-- Main Content Area -->
+    <main id="main-content" role="main">
+      <!-- Groups List View -->
+      <section id="view-groups" class="view" aria-label="Groups list">
+        <ul id="groups-list" class="item-list" role="list"></ul>
+        <p id="groups-empty" class="empty-message" hidden>No groups yet. Tap + to add one.</p>
+      </section>
+
+      <!-- Group Detail/Edit View -->
+      <section id="view-group-detail" class="view" hidden aria-label="Group details">
+        <form id="group-form" class="detail-form">
+          <input type="hidden" id="group-id">
+          <div class="form-field">
+            <label for="group-name">Name</label>
+            <input type="text" id="group-name" required maxlength="100" placeholder="Group name">
+          </div>
+          <div class="form-field">
+            <label for="group-description">Description</label>
+            <textarea id="group-description" maxlength="500" rows="3" placeholder="Brief description"></textarea>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="button" id="group-delete-btn" class="btn btn-danger" hidden>Delete</button>
+          </div>
+        </form>
+        <div id="group-breeds" class="related-items" hidden>
+          <h2>Breeds in this Group</h2>
+          <ul id="group-breeds-list" class="item-list" role="list"></ul>
+        </div>
+      </section>
+
+      <!-- Breeds List View -->
+      <section id="view-breeds" class="view" hidden aria-label="Breeds list">
+        <ul id="breeds-list" class="item-list" role="list"></ul>
+        <p id="breeds-empty" class="empty-message" hidden>No breeds yet. Tap + to add one.</p>
+      </section>
+
+      <!-- Breed Detail/Edit View -->
+      <section id="view-breed-detail" class="view" hidden aria-label="Breed details">
+        <form id="breed-form" class="detail-form">
+          <input type="hidden" id="breed-id">
+          <div class="form-field">
+            <label for="breed-name">Name</label>
+            <input type="text" id="breed-name" required maxlength="100" placeholder="Breed name">
+          </div>
+          <div class="form-field">
+            <label for="breed-group">Group</label>
+            <select id="breed-group" required>
+              <option value="">Select a group</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="breed-description">Description</label>
+            <textarea id="breed-description" maxlength="500" rows="3" placeholder="Brief description"></textarea>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="button" id="breed-delete-btn" class="btn btn-danger" hidden>Delete</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Settings View -->
+      <section id="view-settings" class="view" hidden aria-label="Settings">
+        <div class="settings-section">
+          <h2>Data Management</h2>
+          <div class="settings-actions">
+            <button id="export-btn" class="btn btn-secondary">Export Data</button>
+            <button id="import-btn" class="btn btn-secondary">Import Data</button>
+          </div>
+          <input type="file" id="import-file" accept=".json" hidden>
+        </div>
+        <div class="settings-section">
+          <h2>About</h2>
+          <p class="app-info">Dog Breeds Tracker v1.0.0</p>
+          <p class="app-info">A PWA for tracking dog breeds and their groups.</p>
+        </div>
+      </section>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav" role="navigation" aria-label="Main navigation">
+      <button class="nav-item active" data-route="groups" aria-label="Groups">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7"/>
+          <rect x="14" y="3" width="7" height="7"/>
+          <rect x="3" y="14" width="7" height="7"/>
+          <rect x="14" y="14" width="7" height="7"/>
+        </svg>
+        <span>Groups</span>
+      </button>
+      <button class="nav-item" data-route="breeds" aria-label="Breeds">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+          <circle cx="8" cy="10" r="1.5"/>
+          <circle cx="16" cy="10" r="1.5"/>
+          <path d="M9 16c1.5 1 4.5 1 6 0"/>
+        </svg>
+        <span>Breeds</span>
+      </button>
+      <button class="nav-item" data-route="settings" aria-label="Settings">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
+        </svg>
+        <span>Settings</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Confirmation Dialog -->
+  <dialog id="confirm-dialog" class="modal">
+    <div class="modal-content">
+      <p id="confirm-message"></p>
+      <div class="modal-actions">
+        <button id="confirm-cancel" class="btn btn-secondary">Cancel</button>
+        <button id="confirm-ok" class="btn btn-danger">Delete</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
